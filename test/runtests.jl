@@ -7,9 +7,9 @@ efile = "../dados/network/simplified/edges.csv"
 odfile = "../dados/network/simplified/od_mat.csv" #have been checked, ok
 
 g, distmx, textmx, loc = RoadValue.reducedNet(vfile, efile)
-pmx = RoadValue.valueAssignment(g, distmx, odfile)
+valuemx = RoadValue.valueAssignment(g, distmx, odfile)
 #
 #
 @testset "RoadValue" begin
-	@test RoadValue.reduced2gpkg(g, loc, pmx, textmx)
+	@test RoadValue.reduced2gpkg(g, loc, valuemx, textmx)
 end

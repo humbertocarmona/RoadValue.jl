@@ -22,8 +22,7 @@ function reducedNet(nfile::String, efile::String)
     es = CSV.read(efile) |> DataFrame  # now es is not const.
 
     nvs = size(vs, 1)  #number of vertices
-    println(first(es,3))
-    println(first(vs,3))
+
 
     distmx = zeros(nvs, nvs) # distance matrix
     textmx = ["" for i=1:nvs, j=1:nvs]

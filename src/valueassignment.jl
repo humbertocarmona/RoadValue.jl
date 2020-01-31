@@ -5,44 +5,51 @@ function valueAssignment(g::SimpleGraph, distmx::Array{Float64, 2}, odfile::Stri
         g::SimpleGraph -  reduced network created using reducedNet(..)
         distmx::Array{Float64, 2} -  distance between vertices
         odfile::String - path to file containg origin destination values - trade
+        odmat: org,dst,ibge1,ibge2,val
     """
 
-    od = CSV.read(odfile) # not mutable DataFrame add  |>DataFrame for mutablle
-
+    # checked....
     # Fortaleza 1245
     # Sobral 1143 239km checado lat ln googlemaps
     # Juazeiro 1094 499Km checado com o googlemaps
-    # Limoeiro 1226
-    # Maracanau 1159
-    # Poranga 1202
+    # Limoeiro 1226 ok
+    # Maracanau 1159 ok
+    # Poranga 1202 ok
 
-    orig = 1245
-    dest = 1094
 
-    pmx = zeros(size(distmx))
+    od = CSV.read(odfile)|>DataFrame # not mutable DataFrame add  |>DataFrame for mutablle
+    select!(od, [:org, :dst, :val])
+    nrows = size(od,1)
+    valemx = zeros(size(distmx))
 
-    dijk = dijkstra_shortest_paths(g, orig, distmx, allpaths=true)
-    println("orig = $orig, dest = $dest")
-    sv = dijk.predecessors[dest]
+    f = 1
+    while f < nrows
+         sod = filter(row -> row[:org] == od[f, :org], od)
+         n = size(sod,1)
+         orig = sod[1,:org]
+         dijk = dijkstra_shortest_paths(g, orig, distmx, allpaths=true)
+         for d=1:n
+             dest = sod[d,:dst]
+             sv = dijk.predecessors[dest]
+             havepath = size(sv,1) > 0
+             if havepath
+                 t = dest
+                 s = sv[1]
+                 while s != orig # loop through edges in shortest path
+                     s = dijk.predecessors[t][1]
 
-    havepath = size(sv,1) > 0
-    distance = 0.0
-    if havepath
-        t = dest
-        s = sv[1]
-        while s != orig # loop through edges in shortest path
-            s = dijk.predecessors[t][1]
-
-            w = distmx[s,t]
-            println("$t <= $s ...  $w")
-            distance += w
-            pmx[s,t] = 1.0
-            pmx[t,s] = 1.0
-            t = s
-        end
+                     w = distmx[s,t]
+                     valemx[s,t] += w
+                     valemx[t,s] = valemx[s,t]
+                     t = s
+                 end
+             elseif orig ≠ dest
+                 println("no path, $orig <-> $dest")
+             end
+         end
+         f += n
     end
-    println("distance = $distance  $(distmx[390,dest])")
-    println("orig = $orig, dest = $dest")
 
-    return pmx
+
+    return valemx
 end

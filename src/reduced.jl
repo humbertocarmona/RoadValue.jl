@@ -22,45 +22,25 @@ function reducedNet(nfile::String, efile::String)
     es = CSV.read(efile) |> DataFrame  # now es is not const.
 
     nvs = size(vs, 1)  #number of vertices
+    println(first(es,3))
+    println(first(vs,3))
+
     distmx = zeros(nvs, nvs) # distance matrix
+    textmx = ["" for i=1:nvs, j=1:nvs]
     g = SimpleGraph(nvs)
 
     es.km = maptorange(es.km)  # map to [0,1] interval
     for i = 1:size(es, 1)
         o = es.orig[i]
         d = es.dest[i]
+
         if add_edge!(g, o, d)
-            distmx[o, d] = (1 - 0.5es.jur[i]) * es.km[i]  # federal have 50% less weight
-        else
-            f = has_edge(g, o, d)
-            # @printf "problem %d %d %d\n" s d f
+            distmx[o, d] =  (1 - 0.5es.jur[i])*es.km[i]  # (1 - 0.5es.jur[i]) * federal have 50% less weight
+            distmx[d, o] =  distmx[o, d]
+            textmx[o, d] = "$o:$(vs[!,:cname][o])<->$d:$(vs[!,:cname][d])  $(distmx[o, d])"
+            textmx[d, o] =  textmx[o, d]
         end
     end
     location = collect(zip(vs.lat, vs.lon))
-    return g, distmx, location
-end
-
-
-function reduced2gpkg(g::SimpleGraph, locations::Vector{Tuple{Float64,Float64}},
-                      distmx::Array{Float64, 2}, outfile::String = "test.gpkg")
-
-    gpd = pyimport("geopandas")
-    geom = pyimport("shapely.geometry")
-    coords = [geom.Point(c) for c in locations]
-    links = collect(edges(g))
-
-    dist  = []
-    geometry = []
-    for e in links
-        s = e.src
-        d = e.dst
-        push!(geometry, geom.LineString([coords[s],coords[d]]))
-        push!(dist, distmx[s,d])
-    end
-
-    data = Dict("dist" => dist, "eid"=> 1:size(links,1))
-    gdf = gpd.GeoDataFrame(data=data, geometry=geometry)
-    gdf.to_file(outfile, layer="simplified road value", driver="GPKG")
-
-    return true
+    return g, distmx, textmx, location
 end

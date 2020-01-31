@@ -10,10 +10,8 @@ greet() = println("\n------\nHello this is the RoadValue package!\n------")
 
 include("utils.jl")
 include("reduced.jl")
-
-
-
-export reducedNet
+include("reduced2gpkg.jl")
+include("valueassignment.jl")
 
 
 end # module

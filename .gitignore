@@ -1,0 +1,6 @@
+*.jl.*.cov
+*.jl.cov
+*.jl.mem
+/results/
+/Manifest.toml
+/dev/

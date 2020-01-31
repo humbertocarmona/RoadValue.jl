@@ -1,0 +1,128 @@
+id, produto
+01911,Arroz, trigo e outros cereais
+01912,Milho em grão
+01913,Algodão herbáceo, outras fibras da lavoura temporária
+01914,Cana-de-açúcar
+01915,Soja  em grão
+01916,Outros produtos e serviços da lavoura temporária
+01917,Laranja
+01918,Café em grão
+01919,Outros produtos da lavoura permanente
+01921,Bovinos e outros animais vivos, produtos animal, caça e serviços
+01922,Leite de vaca e de outros animais
+01923,Suínos
+01924,Aves e ovos
+02801,Produtos da exploração florestal e da silvicultura
+02802,Pesca e aquicultura (peixe, crustáceos e moluscos)
+05801,Carvão mineral
+05802,Minerais não metálicos
+06801,Petróleo, gás natural e serviços de apoio
+07911,Minério de ferro
+07921,Minerais metálicos não ferrosos
+10911,Carne de bovinos e outros produtos de carne
+10912,Carne de suíno
+10913,Carne de aves
+10914,Pescado industrializado
+10915,Leite resfriado, esterilizado e pasteurizado
+10916,Outros produtos do laticínio
+10921,Açúcar
+10931,Conservas de frutas, legumes, outros vegetais e sucos de frutas
+10932,Óleos e gorduras vegetais e animais
+10933,Café beneficiado
+10934,Arroz beneficiado e produtos derivados do arroz
+10935,Produtos derivados do trigo, mandioca ou milho
+10936,Rações balanceadas para animais
+10937,Outros produtos alimentares
+11001,Bebidas
+12001,Produtos do fumo
+13001,Fios e fibras têxteis beneficiadas
+13002,Tecidos
+13003,Artigos têxteis de uso doméstico e outros têxteis
+14001,Artigos do vestuário e acessórios
+15001,Calçados e artefatos de couro
+16001,Produtos de madeira, exclusive móveis
+17001,Celulose
+17002,Papel, papelão, embalagens e artefatos de papel
+18001,Serviços de impressão e reprodução
+19911,Combustíveis para aviação
+19912,Gasoálcool
+19913,Naftas para petroquímica
+19914,Óleo combustível  
+19915,Diesel - biodiesel
+19916,Outros produtos do refino do petróleo
+19921,Etanol e outros biocombustíveis
+20911,Produtos químicos inorgânicos
+20912,Adubos e fertilizantes
+20913,Produtos químicos orgânicos
+20914,Resinas, elastômeros e fibras artificiais e sintéticas
+20921,Defensivos agrícolas e desinfestantes domissanitários
+20922,Produtos químicos diversos 
+20923,Tintas, vernizes, esmaltes e lacas
+20931,Perfumaria, sabões e artigos de limpeza
+21001,Produtos farmacêuticos
+22001,Artigos de borracha
+22002,Artigos de plástico
+23001,Cimento
+23002,Artefatos de cimento, gesso e semelhantes
+23003,Vidros, cerâmicos e outros produtos de minerais não metálicos
+24911,Ferro gusa e ferroligas
+24912,Semi acabados, laminados planos, longos e tubos de aço
+24921,Produtos da metalurgia de metais não ferrosos
+24922,Peças fundidas de aço e de metais não ferrosos
+25001,Produtos de metal, exclusive máquinas e equipamentos
+26001,Componentes eletrônicos
+26002,Máquinas para escritório e equipamentos de informática
+26003,Material eletrônico e equipamentos de comunicações
+26004,Equipamentos de medida, teste e controle, ópticos e eletromédicos
+27001,Máquinas, aparelhos e materiais elétricos
+27002,Eletrodomésticos
+28001,Tratores e outras máquinas agrícolas
+28002,Máquinas para a extração mineral e a construção
+28003,Outras máquinas e equipamentos mecânicos
+29911,Automóveis, camionetas e utilitários
+29912,Caminhões e ônibus, inclusive cabines, carrocerias e reboques
+29921,Peças e acessórios para veículos automotores
+30001,Aeronaves, embarcações e outros equipamentos de transporte
+31801,Móveis
+31802,Produtos de industrias diversas
+33001,Manutenção, reparação e instalação de máquinas e equipamentos
+35001,Eletricidade, gás e outras utilidades
+36801,Água, esgoto, reciclagem e gestão de resíduos
+41801,Edificações
+41802,Obras de infraestrutura
+41803,Serviços especializados para construção
+45801,Comércio por atacado e varejo
+49001,Transporte terrestre de carga
+49002,Transporte terrestre de passageiros
+50001,Transporte aquaviário
+51001,Transporte aéreo
+52801,Armazenamento e serviços auxiliares aos transportes
+52802,Correio e outros serviços de entrega
+55001,Serviços de alojamento em hotéis e similares
+56001,Serviços  de alimentação
+58001,Livros, jornais e revistas
+59801,Serviços cinematográficos, música, rádio e televisão
+61001,Telecomunicações, TV por assinatura e outros serviços relacionados
+62801,Desenvolvimento de sistemas e outros serviços de informação
+64801,Intermediação financeira, seguros e previdência complementar
+68001,Aluguel efetivo e serviços imobiliários
+68002,Aluguel imputado
+69801,Serviços jurídicos, contabilidade e consultoria
+71801,Pesquisa e desenvolvimento
+71802,Serviços de arquitetura e engenharia
+73801,Publicidade e outros serviços técnicos
+77001,Aluguéis não imobiliários e gestão de ativos de propriedade intelectual
+78801,Condomínios e serviços para edifícios
+78802,Outros serviços administrativos
+80001,Serviços de vigilância, segurança e investigação
+84001,Serviços coletivos da administração pública
+84002,Serviços de previdência e assistência social
+85911,Educação pública
+85921,Educação privada
+86911,Saúde pública
+86921,Saúde privada
+90801,Serviços de artes, cultura, esporte e recreação
+94801,Organizações patronais, sindicais e outros serviços associativos
+94802,Manutenção de computadores, telefones e objetos domésticos
+94803,Serviços pessoais
+97001,Serviços domésticos

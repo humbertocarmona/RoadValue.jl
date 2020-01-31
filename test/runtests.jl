@@ -6,7 +6,7 @@ vfile = "../dados/network/simplified/vertices.csv"
 efile = "../dados/network/simplified/edges.csv"
 rd, distmx, loc = reducedNet(vfile, efile)
 
-RoadValue.reduced2gpkg(rd, loc)
+# RoadValue.reduced2gpkg(rd, loc, distmx)
 @testset "RoadValue" begin
-	@test RoadValue.reduced2gpkg(rd, loc)
+	@test RoadValue.reduced2gpkg(rd, loc, distmx)
 end

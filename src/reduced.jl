@@ -1,4 +1,4 @@
-function reducedNet(nfile::String, efile::String)
+function reducedNet(vfile::String, efile::String)
     """
     Creates the simplified undirected road network:
     only cities connected by straight roads
@@ -18,28 +18,30 @@ function reducedNet(nfile::String, efile::String)
         distmax::Array{Float} (distance matrix)
     """
 
-    vs = CSV.read(nfile)
-    es = CSV.read(efile) |> DataFrame  # now es is not const.
+    vs = CSV.read(vfile)
+    es = CSV.read(efile) |> DataFrame
 
-    nvs = size(vs, 1)  #number of vertices
-
+    nvs = size(vs, 1)  # number of vertices
+    nes = size(es, 1)  # number od edges
 
     distmx = zeros(nvs, nvs) # distance matrix
     textmx = ["" for i=1:nvs, j=1:nvs]
+    eidic = Dict() #need this dict because not all edges are added
     g = SimpleGraph(nvs)
-
-    es.km = maptorange(es.km)  # map to [0,1] interval
-    for i = 1:size(es, 1)
+    eid = 0
+    for i = 1:nes
         o = es.orig[i]
         d = es.dest[i]
-
+        dist = es.km[i]
         if add_edge!(g, o, d)
-            distmx[o, d] =  (1 - 0.5es.jur[i])*es.km[i]  # (1 - 0.5es.jur[i]) * federal have 50% less weight
-            distmx[d, o] =  distmx[o, d]
-            textmx[o, d] = "$o:$(vs[!,:cname][o])<->$d:$(vs[!,:cname][d])  $(distmx[o, d])"
+            eid += 1
+            eidic[i] = eid  
+            distmx[o, d] =  dist  # (1 - 0.5es.jur[i]) * federal have 50% less weight
+            distmx[d, o] =  dist
+            textmx[o, d] = "old=$i, new=$eid, $o<->$d, d=$dist"
             textmx[d, o] =  textmx[o, d]
         end
     end
-    location = collect(zip(vs.lat, vs.lon))
-    return g, distmx, textmx, location
+    locations = collect(zip(vs.lat, vs.lon))
+    return g, distmx, textmx, eidic, locations
 end

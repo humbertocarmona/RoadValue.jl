@@ -2,14 +2,16 @@ using RoadValue
 using Test
 RoadValue.greet()
 println("working path = ", pwd())
-vfile = "../dados/network/simplified/vertices1.csv"
-efile = "../dados/network/simplified/edges.csv"
-odfile = "../dados/network/simplified/od_mat.csv" #have been checked, ok
-
-g, distmx, textmx, loc = RoadValue.reducedNet(vfile, efile)
+vrfile = "../dados/vertices_reduced.csv"
+erfile = "../dados/edges_reduced.csv"
+vffile = "../dados/vertices_full.csv"
+effile = "../dados/edges_full.csv"
+odfile = "../dados/od_mat.csv" #have been checked, ok
+g, distmx, textmx, eidic, location = RoadValue.reducedNet(vrfile, erfile)
 valuemx = RoadValue.valueAssignment(g, distmx, odfile)
-#
-#
+RoadValue.full2gpkg(erfile,vffile, effile, distmx, eidic)
+RoadValue.reduced2gpkg(g, location, distmx, textmx)
+
 @testset "RoadValue" begin
-	@test RoadValue.reduced2gpkg(g, loc, valuemx, textmx)
+	@test true
 end

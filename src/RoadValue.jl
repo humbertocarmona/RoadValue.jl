@@ -11,6 +11,7 @@ greet() = println("\n------\nHello this is the RoadValue package!\n------")
 include("utils.jl")
 include("reduced.jl")
 include("reduced2gpkg.jl")
+include("full2gpkg.jl")
 include("valueassignment.jl")
 
 

@@ -1,21 +1,21 @@
 function reducedNet(vfile::String, efile::String)
     """
-    Creates the simplified undirected road network:
-    only cities connected by straight roads
+        Creates the simplified undirected road network:
+        only cities connected by straight roads
 
-    Arguments:
-        nfile::String (input file for vertices)
-        # lon, lat, ibge, v(full network index)
+        Arguments:
+            nfile::String (input file for vertices)
+            # lon, lat, ibge, v(full network index)
 
-        efile::String (input file for edges)
-        # orig, dest, km, jur
-        # km: distance from one city to another
-        # jur: juristiction state≡0 federal≡1
+            efile::String (input file for edges)
+            # orig, dest, km, jur
+            # km: distance from one city to another
+            # jur: juristiction state≡0 federal≡1
 
 
-    Returns:
-        g::SimpleGraph
-        distmax::Array{Float} (distance matrix)
+        Returns:
+            g::SimpleGraph
+            distmax::Array{Float} (distance matrix)
     """
 
     vs = CSV.read(vfile)
@@ -25,23 +25,33 @@ function reducedNet(vfile::String, efile::String)
     nes = size(es, 1)  # number od edges
 
     distmx = zeros(nvs, nvs) # distance matrix
-    textmx = ["" for i=1:nvs, j=1:nvs]
+    jurmx  = zeros(nvs, nvs) # distance matrix
     eidic = Dict() #need this dict because not all edges are added
     g = SimpleGraph(nvs)
-    eid = 0
+
     for i = 1:nes
         o = es.orig[i]
         d = es.dest[i]
-        dist = es.km[i]
         if add_edge!(g, o, d)
-            eid += 1
-            eidic[i] = eid  
+            dist = es.km[i]
             distmx[o, d] =  dist  # (1 - 0.5es.jur[i]) * federal have 50% less weight
             distmx[d, o] =  dist
-            textmx[o, d] = "old=$i, new=$eid, $o<->$d, d=$dist"
-            textmx[d, o] =  textmx[o, d]
+            jurmx[o, d] = es.jur[i]
+            jurmx[d, o] =  jurmx[o, d]
         end
     end
+
+    # edges are not added in order...
+    gedges = collect(edges(g))
+    gedges = [(e.src, e.dst) for e in gedges]
+    for i = 1:nes
+        j = es.orig[i]
+        k = es.dest[i]
+        o = min(j,k)
+        d = max(j,k)
+        e = findall(x->x==(o,d), gedges)
+        eidic[i] = e[1]
+    end
     locations = collect(zip(vs.lat, vs.lon))
-    return g, distmx, textmx, eidic, locations
+    return g, distmx, jurmx, eidic, locations
 end

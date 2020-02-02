@@ -1,24 +1,25 @@
-function full2gpkg(erfile::String, vffile::String, effile::String,
-                   distmx::Array{Float64, 2}, eidic::Dict{Any,Any};
+function full2gpkg(g::SimpleGraph, vffile::String, effile::String,
+                   distmx::Array{Float64, 2}, jurmx, eidic::Dict{Any,Any};
                    outfile::String = "full.gpkg")
 
     """
-    Arguments:
-        erfile - contains reduced net edges - orig,dest,km,jur
-        effile - contains full net edges - orig,dest,redge(reduced edge)
-        vffile - contains full net vertices - lon,lat,ibge
+        Arguments:
+            erfile - contains reduced net edges - orig,dest,km,jur
+            effile - contains full net edges - orig,dest,redge(reduced edge)
+            vffile - contains full net vertices - lon,lat,ibge
     """
     gpd = pyimport("geopandas")
     geom = pyimport("shapely.geometry")
     #----------------------------------------------------
-    er = CSV.read(erfile)
     ef = CSV.read(effile)
     vf = CSV.read(vffile)
+    gedges = collect(edges(g))
+
 
     nef = size(ef,1)
     dist = []
     geometry = []
-    eid = []
+    jur = []
     # first need to be treated separetly
     rold = ef[1,:redge]
     o = ef[1,:orig]
@@ -40,20 +41,22 @@ function full2gpkg(erfile::String, vffile::String, effile::String,
             push!(linestr, (dlat, dlon))
         else
             if haskey(eidic, rold)
-                j = eidic[rold]
-                k = er[j,:orig]
-                l = er[j,:dest]
+                j = eidic[rold+1]
+                ej = gedges[j]
+                k = ej.src
+                l = ej.dst
                 push!(dist, distmx[k,l])
+                push!(jur, jurmx[k,l])
+                push!(geometry, geom.LineString(linestr))
             else
                 push!(dist, -1.0)
             end
-            push!(eid, rold)
-            push!(geometry, geom.LineString(linestr))
+            # start new linestring
             linestr = [(olat, olon), (dlat, dlon)]
         end
         rold = r
     end
-    data = Dict("dist" => dist, "eid"=> eid)
+    data = Dict("dist" => dist, "jur"=> jur)
     gdf = gpd.GeoDataFrame(data=data, geometry=geometry)
     gdf.to_file(outfile, layer="full", driver="GPKG")
 

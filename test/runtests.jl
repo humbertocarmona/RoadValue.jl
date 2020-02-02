@@ -7,10 +7,14 @@ erfile = "../dados/edges_reduced.csv"
 vffile = "../dados/vertices_full.csv"
 effile = "../dados/edges_full.csv"
 odfile = "../dados/od_mat.csv" #have been checked, ok
-g, distmx, textmx, eidic, location = RoadValue.reducedNet(vrfile, erfile)
+
+outfull = "../results/full.gpkg"
+outreduced = "../results/reduced.gpkg"
+
+g, distmx, jurmx, eidic, location = RoadValue.reducedNet(vrfile, erfile)
 valuemx = RoadValue.valueAssignment(g, distmx, odfile)
-RoadValue.full2gpkg(erfile,vffile, effile, distmx, eidic)
-RoadValue.reduced2gpkg(g, location, distmx, textmx)
+RoadValue.full2gpkg(g,vffile, effile, valuemx, jurmx, eidic, outfile=outfull)
+RoadValue.reduced2gpkg(g, location, valuemx, jurmx, outfile=outreduced)
 
 @testset "RoadValue" begin
 	@test true

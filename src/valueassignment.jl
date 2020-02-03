@@ -18,27 +18,28 @@ function valueAssignment(g::SimpleGraph, distmx::Array{Float64, 2}, odfile::Stri
 
 
     od = CSV.read(odfile)|>DataFrame # not mutable DataFrame add  |>DataFrame for mutablle
-    select!(od, [:org, :dst, :val])
+    select!(od, [:orig, :dest, :val])
     nrows = size(od,1)
     valemx = zeros(size(distmx))
 
     f = 1
     while f < nrows
-         sod = filter(row -> row[:org] == od[f, :org], od)
+         sod = filter(row -> row[:orig] == od[f, :orig], od)
          n = size(sod,1)
-         orig = sod[1,:org]
+         orig = sod[1,:orig]
          dijk = dijkstra_shortest_paths(g, orig, distmx, allpaths=true)
          for d=1:n
-             dest = sod[d,:dst]
+             dest = sod[d,:dest]
+
              sv = dijk.predecessors[dest]
              havepath = size(sv,1) > 0
-             if havepath
+             w = sod[d,:val]/1e6 #millions
+             if havepath && orig≠dest
                  t = dest
                  s = sv[1]
+
                  while s != orig # loop through edges in shortest path
                      s = dijk.predecessors[t][1]
-
-                     w = distmx[s,t]
                      valemx[s,t] += w
                      valemx[t,s] = valemx[s,t]
                      t = s

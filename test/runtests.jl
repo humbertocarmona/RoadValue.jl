@@ -14,10 +14,8 @@ outreduced = "../results/reduced.gpkg"
 
 # g, distmx, jurmx, eidic, location = RoadValue.reducedNet(vrfile, erfile)
 # valuemx = RoadValue.valueAssignment(g, distmx, odfile)
-# # TODO - draw od netwoork
 # RoadValue.full2gpkg(g,vffile, effile, valuemx, jurmx, eidic, outfile=outfull)
 # RoadValue.reduced2gpkg(g, location, valuemx, jurmx, outfile=outreduced)
-
 RoadValue.odm2gpkg(odfile, vrfile; outfile="../results/od.gpkg")
 
 # @testset "RoadValue" begin

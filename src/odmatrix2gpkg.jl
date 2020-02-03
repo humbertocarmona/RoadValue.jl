@@ -18,11 +18,12 @@ function odm2gpkg(odfile::String, vfile::String; outfile::String="od.gpkg")
         dlat = vs[d,:lat]
         dlon = vs[d,:lon]
         push!(geometry,geom.LineString([(olat, olon),(dlat, dlon)]))
-        push!(value, odm[i,:val])
+        push!(value, odm[i,:val]/1e6)
         push!(outfrom, vs[o,:cname])
     end
     data = Dict("value" => value, "outfrom"=>outfrom)
     gdf = gpd.GeoDataFrame(data=data, geometry=geometry)
+    println("saving to $outfile")
     gdf.to_file(outfile, layer="reduced", driver="GPKG")
     return true
 end

@@ -58,6 +58,7 @@ function full2gpkg(g::SimpleGraph, vffile::String, effile::String,
     end
     data = Dict("dist" => dist, "jur"=> jur)
     gdf = gpd.GeoDataFrame(data=data, geometry=geometry)
+    println("saving $outfile")
     gdf.to_file(outfile, layer="full", driver="GPKG")
 
     return true

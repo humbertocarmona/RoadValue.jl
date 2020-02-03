@@ -33,8 +33,8 @@ function reducedNet(vfile::String, efile::String)
         o = es.orig[i]
         d = es.dest[i]
         if add_edge!(g, o, d)
-            dist = es.km[i]
-            distmx[o, d] =  dist  # (1 - 0.5es.jur[i]) * federal have 50% less weight
+            dist = (1 - 0.0*es.jur[i])*es.km[i]#  (1 - 0.5es.jur[i]) * federal have 50% less weight
+            distmx[o, d] =  dist
             distmx[d, o] =  dist
             jurmx[o, d] = es.jur[i]
             jurmx[d, o] =  jurmx[o, d]

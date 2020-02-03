@@ -18,6 +18,8 @@ function reduced2gpkg(g::SimpleGraph, locations::Vector{Tuple{Float64,Float64}},
     end
     data = Dict("dist" => dist, "jur"=> jur)
     gdf = gpd.GeoDataFrame(data=data, geometry=geometry)
+    println("saving $outfile")
+
     gdf.to_file(outfile, layer="reduced", driver="GPKG")
 
     return true

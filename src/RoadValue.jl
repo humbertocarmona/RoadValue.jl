@@ -13,6 +13,7 @@ include("reduced.jl")
 include("reduced2gpkg.jl")
 include("full2gpkg.jl")
 include("valueassignment.jl")
+include("odmatrix2gpkg.jl")
 
 
 end # module

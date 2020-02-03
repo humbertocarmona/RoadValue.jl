@@ -11,11 +11,15 @@ odfile = "../dados/od_mat.csv" #have been checked, ok
 outfull = "../results/full.gpkg"
 outreduced = "../results/reduced.gpkg"
 
-g, distmx, jurmx, eidic, location = RoadValue.reducedNet(vrfile, erfile)
-valuemx = RoadValue.valueAssignment(g, distmx, odfile)
-RoadValue.full2gpkg(g,vffile, effile, valuemx, jurmx, eidic, outfile=outfull)
-RoadValue.reduced2gpkg(g, location, valuemx, jurmx, outfile=outreduced)
 
-@testset "RoadValue" begin
-	@test true
-end
+# g, distmx, jurmx, eidic, location = RoadValue.reducedNet(vrfile, erfile)
+# valuemx = RoadValue.valueAssignment(g, distmx, odfile)
+# # TODO - draw od netwoork
+# RoadValue.full2gpkg(g,vffile, effile, valuemx, jurmx, eidic, outfile=outfull)
+# RoadValue.reduced2gpkg(g, location, valuemx, jurmx, outfile=outreduced)
+
+RoadValue.odm2gpkg(odfile, vrfile; outfile="../results/od.gpkg")
+
+# @testset "RoadValue" begin
+# 	@test
+# end

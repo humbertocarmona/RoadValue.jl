@@ -4,5 +4,6 @@
 *.tar
 /results/
 /dados/
+/mapas/
 /Manifest.toml
 /dev/
